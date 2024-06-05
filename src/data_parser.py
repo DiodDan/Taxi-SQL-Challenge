@@ -32,6 +32,7 @@ def main():
                     session.add(TaxiLookups(**row.to_dict()))
                 session.commit()
                 print("Data inserted successfully")
+            print("Data already exists in the database")
         except Exception as e:
             print(e)
 
@@ -42,9 +43,13 @@ def main():
                 for _, row in trip_data.iterrows():
                     i += 1
                     session.add(TripData(**row.to_dict()))
-                    if i % 100_000 == 0:
+                    if i % 1_000_000 == 0:
                         session.commit()
+                        print(f"{i} rows inserted")
+                session.commit()
+                print(f"{i} rows inserted")
                 print("Data inserted successfully")
+            print("Data already exists in the database")
         except Exception as e:
             print(e)
 
