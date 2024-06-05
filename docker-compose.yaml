@@ -1,0 +1,32 @@
+version: "3.9"
+
+
+
+services:
+  postgres_rdb:
+    container_name: postgres_rdb
+    image: postgres:latest
+    env_file:
+      - .env
+    ports:
+      - "${PG_PORT}:${PG_PORT}"
+    networks:
+      - postgres-network
+
+
+  locall_pgadmin:
+    image: elestio/pgadmin:latest
+    container_name: locall_pgadmin
+    ports:
+      - "${PGADMIN_LISTEN_PORT}:${PGADMIN_LISTEN_PORT}"
+    env_file:
+      - .env
+    depends_on:
+      - postgres_rdb
+    networks:
+      - postgres-network
+
+
+networks:
+  postgres-network:
+    driver: bridge
